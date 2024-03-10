@@ -10,6 +10,11 @@ const Addupdate = () => {
   const [contacts, setContacts] = useState([]);
   const [addcontact, setaddcontact] = useState();
   const contactsRef = collection(db, "contects");
+  const [close, setclose] = useState(false);
+
+  const gettoggle = () => {
+    setclose((val) => !val);
+  };
 
   useEffect(() => {
     const getContacts = async () => {
@@ -22,7 +27,6 @@ const Addupdate = () => {
             ...doc.data(),
           };
         });
-        console.log("This is list", contactList);
         setContacts(contactList); // Updated state variable
       } catch (error) {
         console.log("Database error:", error); // Improved error handling
@@ -30,10 +34,10 @@ const Addupdate = () => {
     };
 
     getContacts();
-  }, []);
+  }, [close]);
 
   return (
-    <section className="mt-30 container mt-10 flex flex-col items-center justify-center ">
+    <section className="mt-30 container mt-10 flex flex-col items-center justify-center  ">
       <div className="w-full max-w-[370px] space-y-4 px-4">
         <Navbar />
         <div className="relative flex items-center gap-4">
@@ -43,12 +47,10 @@ const Addupdate = () => {
             className="h-10 flex-grow rounded-lg border-2 border-white bg-transparent pl-10 text-lg font-semibold outline-none"
             placeholder="search contact"
           />
-          <FaCirclePlus className="text-5xl" />
+          <FaCirclePlus className="text-5xl" onClick={gettoggle} />
         </div>
-        <div className="absolute  bg-red-400">
-          <AddFrom />
-        </div>
-        <Datacard data={contacts} />
+        <div className="">{close ? <AddFrom gettoggle={gettoggle} /> : ""}</div>
+        {close ? "" : <Datacard data={contacts} close={gettoggle} />}
       </div>
     </section>
   );
