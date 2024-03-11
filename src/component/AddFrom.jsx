@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
-const AddFrom = ({ gettoggle }) => {
+const AddFrom = ({ gettoggle, namevalue, emailvalue }) => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
 
   const value = collection(db, "contects");
   const handlesubmit = async (e) => {
     e.preventDefault();
-    console.log("This is e value", name);
-    console.log("This is e value", email);
+
     await addDoc(value, { name: name, email: email });
   };
+
   return (
     <div className="  absolute w-[340px]    rounded-lg bg-white ">
       <div
@@ -29,12 +29,14 @@ const AddFrom = ({ gettoggle }) => {
         <input
           type="text"
           name="name"
+          value={name}
           className=" w-10/12  rounded-lg border-2 border-gray p-2"
           placeholder="enter name"
           onChange={(e) => setname(e.target.value)}
         />
         <input
           type="text"
+          value={email}
           name="email"
           className="w-10/12 rounded-lg border-2 border-gray p-2"
           placeholder="enter email"
