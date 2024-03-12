@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { db } from "../config/firebase";
 import { addDoc, collection } from "firebase/firestore";
-const AddFrom = ({ gettoggle, namevalue, emailvalue }) => {
+import { Globalinfo } from "../App";
+
+const AddFrom = ({ gettoggle, prename, preemail }) => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
 
@@ -11,6 +13,8 @@ const AddFrom = ({ gettoggle, namevalue, emailvalue }) => {
 
     await addDoc(value, { name: name, email: email });
   };
+  console.log("This si name,", prename);
+  console.log("This is the preemail", preemail);
 
   return (
     <div className="  absolute w-[340px]    rounded-lg bg-white ">

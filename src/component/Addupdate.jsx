@@ -86,7 +86,15 @@ const Addupdate = () => {
             ""
           )}
         </div>
-        {close ? "" : <Datacard data={filterdata} getrefresh={setrefresh} />}
+        {close ? (
+          ""
+        ) : (
+          <Datacard
+            data={filterdata}
+            getrefresh={setrefresh}
+            gettoggle={gettoggle}
+          />
+        )}
       </div>
     </section>
   );

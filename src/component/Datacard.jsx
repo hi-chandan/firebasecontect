@@ -4,13 +4,20 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { db } from "../config/firebase";
-import { Updatehook } from "../hooks/Updatehook";
-const Datacard = ({ data, getrefresh }) => {
+import AddFrom from "./AddFrom";
+
+const Datacard = ({ data, getrefresh, gettoggle }) => {
   const handledelete = async (id) => {
     const deleteVal = doc(db, "contects", id);
     await deleteDoc(deleteVal);
     getrefresh((val) => !val);
   };
+
+  const updatehandler = ({ id, name, email }) => {
+    gettoggle();
+    <AddFrom prename={name} preemail={email} />;
+  };
+
   return (
     <div className=" space-y-4">
       {data?.map((val) => (
@@ -29,7 +36,7 @@ const Datacard = ({ data, getrefresh }) => {
             <FaRegEdit
               size={25}
               className="hover:text-blue-600"
-              onClick={Updatehook(val.id, val.name, val.email)}
+              onClick={() => updatehandler(val.id, val.name, val.email)}
             />
             <MdDelete
               size={30}
