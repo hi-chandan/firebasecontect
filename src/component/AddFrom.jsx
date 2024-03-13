@@ -1,20 +1,22 @@
 import React, { useContext, useState } from "react";
 import { db } from "../config/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { Globalinfo } from "../App";
 
-const AddFrom = ({ gettoggle, prename, preemail }) => {
-  const [name, setname] = useState("");
-  const [email, setemail] = useState("");
+const AddFrom = ({ gettoggle }) => {
+  const { setname, setemail, name, email, updatebutton, updateid } =
+    useContext(Globalinfo);
 
   const value = collection(db, "contects");
   const handlesubmit = async (e) => {
     e.preventDefault();
-
-    await addDoc(value, { name: name, email: email });
+    if (!updatebutton) {
+      await addDoc(value, { name: name, email: email });
+    } else {
+      const updatedata = doc(db, "contects", updateid);
+      await updateDoc(updatedata, { name: name, email: email });
+    }
   };
-  console.log("This si name,", prename);
-  console.log("This is the preemail", preemail);
 
   return (
     <div className="  absolute w-[340px]    rounded-lg bg-white ">
@@ -47,12 +49,21 @@ const AddFrom = ({ gettoggle, prename, preemail }) => {
           onChange={(e) => setemail(e.target.value)}
         />
         <div onClick={handlesubmit} className="flex w-full justify-end">
-          <button
-            onClick={gettoggle}
-            className="  w-6/12 rounded-lg bg-green-600 p-2"
-          >
-            Create
-          </button>
+          {updatebutton ? (
+            <button
+              onClick={gettoggle}
+              className="  w-6/12 rounded-lg bg-green-600 p-2"
+            >
+              Update
+            </button>
+          ) : (
+            <button
+              onClick={gettoggle}
+              className="  w-6/12 rounded-lg bg-green-600 p-2"
+            >
+              Create
+            </button>
+          )}
         </div>
       </form>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { CiSearch } from "react-icons/ci";
 import { FaCirclePlus } from "react-icons/fa6";
@@ -7,6 +7,7 @@ import { db } from "../config/firebase";
 import Datacard from "./Datacard";
 import AddFrom from "./AddFrom";
 import { FaCircleMinus } from "react-icons/fa6";
+import { Globalinfo } from "../App";
 
 const Addupdate = () => {
   const [contacts, setContacts] = useState([]);
@@ -14,17 +15,17 @@ const Addupdate = () => {
   const [close, setclose] = useState(false);
   const [filterdata, setfilterdata] = useState();
   const [refresh, setrefresh] = useState(false);
-  const [name, setname] = useState("");
-  const [email, setemail] = useState("");
-
+  const { setname, setemail, setupdatebutton } = useContext(Globalinfo);
   const gettoggle = () => {
+    setname("");
+    setemail("");
+    setupdatebutton(false);
     setclose((val) => !val);
   };
 
   const getserach = (e) => {
     e.preventDefault();
     const getfilterdata = e.target.value;
-    console.log("this is search", getfilterdata);
 
     if (getfilterdata === "") {
       return setfilterdata(contacts);
@@ -75,17 +76,7 @@ const Addupdate = () => {
             <FaCirclePlus onClick={gettoggle} className="text-5xl" />
           )}
         </div>
-        <div className="">
-          {close ? (
-            <AddFrom
-              gettoggle={gettoggle}
-              namevalue={name}
-              emailvalue={email}
-            />
-          ) : (
-            ""
-          )}
-        </div>
+        <div className="">{close ? <AddFrom gettoggle={gettoggle} /> : ""}</div>
         {close ? (
           ""
         ) : (

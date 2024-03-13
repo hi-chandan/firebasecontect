@@ -1,21 +1,26 @@
 import { deleteDoc, doc } from "firebase/firestore";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRegUserCircle } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { db } from "../config/firebase";
-import AddFrom from "./AddFrom";
+import { Globalinfo } from "../App";
 
 const Datacard = ({ data, getrefresh, gettoggle }) => {
+  const { setupdateid, setname, setemail, setupdatebutton } =
+    useContext(Globalinfo);
   const handledelete = async (id) => {
     const deleteVal = doc(db, "contects", id);
     await deleteDoc(deleteVal);
     getrefresh((val) => !val);
   };
 
-  const updatehandler = ({ id, name, email }) => {
+  const updatehandler = (id, name, email) => {
     gettoggle();
-    <AddFrom prename={name} preemail={email} />;
+    setupdatebutton(true);
+    setupdateid(id);
+    setname(name);
+    setemail(email);
   };
 
   return (
