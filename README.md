@@ -14,6 +14,9 @@ API using firebase
 
 It's a single page application it's has only one page,
 it's fully responsive.
+![image](https://github.com/hi-chandan/firebasecontect/assets/125797501/89b29f02-4494-4688-b830-36c4d34836da)
+
+![image](https://github.com/hi-chandan/firebasecontect/assets/125797501/738e4dd2-9331-4a29-a3e2-f83c864d8dd7)
 
 ## <a name="tech-stack"> ⚙️ Tech Stack </a>
 
